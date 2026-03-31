@@ -4,7 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This is a personal skills repository — a flat collection of Claude Code skills stored in the `skills/` directory. Skills are standalone markdown files that define reusable workflows, patterns, and automation for Claude Code.
+This is a personal Claude Code extensions repository containing both **skills** (auto-triggered by context) and **commands** (explicitly invoked by the user via `/command`).
+
+- **Skills** — stored in `skills/<name>/SKILL.md`, triggered automatically when Claude detects a matching context
+- **Commands** — stored in `commands/<namespace>/<name>.md`, invoked explicitly by the user (e.g., `/zthxxx:tuning`)
+
+Both are markdown files with YAML frontmatter (`name`, `description`, etc.).
 
 ## Tech Stack
 
@@ -22,7 +27,7 @@ This is a personal skills repository — a flat collection of Claude Code skills
 - Layered design: separate concerns across layers
 - Decoupling and extensibility: design for composition, not monoliths
 
-## Commands
+## Dev Commands
 
 ```bash
 # Install dependencies
@@ -44,19 +49,28 @@ bun run <script-path>
 ## Repository Structure
 
 ```
-skills/          # All skills live here as flat .md files
+commands/
+  zthxxx/        # Namespace — commands invoked as /zthxxx:<name>
+    tuning.md    # /zthxxx:tuning
+skills/          # Auto-triggered skills (SKILL.md per subdirectory)
 dict/            # CSpell custom dictionaries
 package.json     # Dependency management for the repo
 ```
 
 ## Maintenance Rules
 
-When creating or modifying a skill:
+When creating or modifying a skill or command:
 
-1. Place the skill file in `skills/` as a `.md` file
-2. Update `README.md` — add the skill to the skills listing with a brief description
-3. Update this `CLAUDE.md` — add the skill to the skills catalog below if it affects how this repo is maintained or has cross-cutting concerns
+1. Commands: place as `commands/<namespace>/<name>.md`; Skills: place as `skills/<name>/SKILL.md`
+2. Update `README.md` — add it to the corresponding listing with a brief description
+3. Update this `CLAUDE.md` — add it to the catalog below
 
-## Skills Catalog
+## Catalog
 
-_(Empty — skills will be listed here as they are created)_
+### Commands
+
+- **zthxxx:tuning** — Processes `/// fix:`, `/// refactor:`, `/// ??:` revision directives from user code review. Rigid 7-phase workflow: project context → discover → read all → cross-reference & plan → execute with checkpoints → verify → final review & summary.
+
+### Skills
+
+_(No skills yet)_

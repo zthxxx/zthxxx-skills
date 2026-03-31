@@ -1,0 +1,80 @@
+# Usage: https://taskfile.dev/usage/
+# Schema Reference: https://taskfile.dev/reference/schema
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+---
+
+version: 3
+
+set: [pipefail]
+shopt: [globstar]
+
+vars:
+  CLAUDE_DIR: "{{.HOME}}/.claude"
+
+silent: false
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task --list-all
+
+  update:
+    desc: Install all commands and skills to global ~/.claude/ via hard link
+    cmds:
+      - task: update:commands
+      - task: update:skills
+
+  update:commands:
+    desc: Hard link all commands to ~/.claude/commands/
+    cmds:
+      - |
+        src_dir="commands"
+        dest_dir="{{.CLAUDE_DIR}}/commands"
+
+        if [ ! -d "${src_dir}" ]; then
+          echo "No commands/ directory found, skipping"
+          exit 0
+        fi
+
+        find "${src_dir}" -type f | while read -r file; do
+          rel="${file#commands/}"
+          target="${dest_dir}/${rel}"
+          mkdir -p "$(dirname "${target}")"
+          rm -f "${target}"
+          ln "${file}" "${target}"
+          echo "  linked: ${rel}"
+        done
+
+        echo "Commands updated."
+
+  update:skills:
+    desc: Hard link all skills to ~/.claude/skills/
+    cmds:
+      - |
+        src_dir="skills"
+        dest_dir="{{.CLAUDE_DIR}}/skills"
+
+        if [ ! -d "${src_dir}" ]; then
+          echo "No skills/ directory found, skipping"
+          exit 0
+        fi
+
+        find "${src_dir}" -name 'SKILL.md' | while read -r file; do
+          skill_dir="$(dirname "${file}")"
+          skill_name="$(basename "${skill_dir}")"
+          target_dir="${dest_dir}/${skill_name}"
+          mkdir -p "${target_dir}"
+
+          # Hard link all files in the skill directory
+          find "${skill_dir}" -type f | while read -r skill_file; do
+            rel="${skill_file#${skill_dir}/}"
+            target="${target_dir}/${rel}"
+            mkdir -p "$(dirname "${target}")"
+            rm -f "${target}"
+            ln "${skill_file}" "${target}"
+            echo "  linked: ${skill_name}/${rel}"
+          done
+        done
+
+        echo "Skills updated."

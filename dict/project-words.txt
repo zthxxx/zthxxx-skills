@@ -1,5 +1,6 @@
-# Project-specific words for zthxxx-skills
+# Project-specific words
 claude
 cspell
+shopt
 tsconfig
 zthxxx

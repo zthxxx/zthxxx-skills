@@ -1,30 +1,36 @@
 # zthxxx-skills
 
-A collection of personal [Claude Code](https://claude.ai/code) skills — reusable workflows, patterns, and automation.
+A collection of personal [Claude Code](https://claude.ai/code) extensions — skills (auto-triggered) and commands (user-invoked).
 
-## Usage
+## Installation
 
-### As a dependency (recommended)
+Requires [go-task](https://taskfile.dev/) (`brew install go-task`).
 
-Add this repo to your project's `.claude/settings.json`:
+```bash
+# Clone the repo
+git clone https://github.com/zthxxx/zthxxx-skills.git
+cd zthxxx-skills
 
-```json
-{
-  "permissions": {
-    "allow": ["skill:zthxxx:*"]
-  }
-}
+# Hard link all commands and skills into ~/.claude/
+task update
 ```
 
-Or reference skills directly via the Skill tool in Claude Code conversations.
+This hard links all commands into `~/.claude/commands/` and all skills into `~/.claude/skills/`, making them globally available. Run `task update` again after pulling new changes.
 
-### Browsing
+## Browsing
 
-All skills are stored as flat markdown files in the [`skills/`](./skills/) directory. Each file is a self-contained skill with frontmatter metadata (`name`, `description`, trigger conditions, etc.).
+- **Commands** — in [`commands/`](./commands/), namespaced directories with `.md` files, invoked via `/namespace:name`
+- **Skills** — in [`skills/`](./skills/), subdirectories with `SKILL.md`, auto-triggered by context
+
+## Commands
+
+| Command | Invoke | Description |
+|---------|--------|-------------|
+| [`tuning`](./commands/zthxxx/tuning.md) | `/zthxxx:tuning` | Process revision directives (`/// fix:`, `/// refactor:`, `/// ??:`) left during code review |
 
 ## Skills
 
-_(No skills yet — they will be listed here as they are created)_
+_(No skills yet)_
 
 ## Development
 

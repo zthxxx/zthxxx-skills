@@ -1,0 +1,5 @@
+# Project-specific words for zthxxx-skills
+claude
+cspell
+tsconfig
+zthxxx

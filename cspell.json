@@ -1,0 +1,35 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "language": "en,en-GB",
+  "languageId": [
+    "typescript"
+  ],
+  "allowCompoundWords": true,
+  "caseSensitive": true,
+  "useGitignore": true,
+  "dictionaries": [
+    "en_us",
+    "software-term-suggestions",
+    "softwareTerms",
+    "coding-compound-terms",
+    "computing-acronyms",
+    "software-tools",
+    "fullstack",
+    "npm",
+    "en-gb",
+    "project-words"
+  ],
+  "dictionaryDefinitions": [
+    {
+      "name": "project-words",
+      "description": "Project-specific words for zthxxx-skills",
+      "path": "./dict/project-words.txt"
+    }
+  ],
+  "ignorePaths": [
+    "**/bun.lockb",
+    "**/node_modules/**",
+    "dist/**"
+  ]
+}

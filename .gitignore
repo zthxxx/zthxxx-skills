@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+dist/
+
+# pnpm
+pnpm-lock.yaml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# Playwright CLI screenshots
+.playwright/
+.playwright-cli/
+
+# Environment
+.env
+*.local

@@ -1,0 +1,38 @@
+{
+  "name": "@zthxxx/skills",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Personal Claude Code skills collection",
+  "scripts": {
+    "lint": "eslint --format codeframe .",
+    "format": "eslint --format codeframe . --fix",
+    "spell": "cspell .",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^7.7.3",
+    "@cspell/dict-en-common-misspellings": "^2.1.12",
+    "@cspell/dict-en-gb": "^5.0.27",
+    "@cspell/dict-fullstack": "^3.2.9",
+    "@cspell/dict-npm": "^5.2.38",
+    "@cspell/dict-software-terms": "^5.2.2",
+    "@types/bun": "^1.3.11",
+    "@types/node": "^25.5.0",
+    "@zthxxx/tsconfig": "^1.0.5",
+    "cspell": "^9.7.0",
+    "eslint": "^10.1.0",
+    "eslint-formatter-codeframe": "^7.32.2",
+    "husky": "^9.1.7",
+    "jiti": "^2.6.1",
+    "lint-staged": "^16.4.0"
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix"
+    ],
+    "*.{ts,md}": [
+      "cspell --no-must-find-files"
+    ]
+  }
+}

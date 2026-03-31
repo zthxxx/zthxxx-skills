@@ -1,0 +1,13 @@
+{
+  "extends": "@zthxxx/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "types": [
+      "node",
+      "bun"
+    ]
+  },
+  "include": [
+    "skills"
+  ]
+}

@@ -1,6 +1,7 @@
 ---
-name: "Tuning"
+name: tuning
 description: Process revision directives (/// fix:, /// refactor:, /// ??:) left in code after review
+disable-model-invocation: true
 ---
 
 # Revision Directive Tuning

@@ -1,5 +1,7 @@
 # Dependencies
 node_modules/
+__pycache__/
+venv/
 dist/
 
 # pnpm
@@ -11,8 +13,19 @@ Thumbs.db
 
 # IDE
 .idea/
+
+*.tmp
+*.bak
+*.log
+*.log.*
+.logs
+
 *.swp
 *.swo
+
+*.zip
+*.tar.gz
+*.7z
 
 # Playwright CLI screenshots
 .playwright/
@@ -21,3 +34,8 @@ Thumbs.db
 # Environment
 .env
 *.local
+.*.local.*
+*.secret
+
+.specstory/
+

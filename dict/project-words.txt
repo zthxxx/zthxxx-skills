@@ -1,6 +1,7 @@
 # Project-specific words
 claude
 cspell
+feishu
 shopt
 tsconfig
 zthxxx

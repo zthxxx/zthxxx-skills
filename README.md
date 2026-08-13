@@ -8,6 +8,11 @@ A collection of personal [Claude Code](https://claude.ai/code) extensions — sk
 npx skills add zthxxx/zthxxx-skills
 ```
 
+## Skills
+
+- **[say-it-pro](./skills/say-it-pro/SKILL.md)** — 工作场景写作与对话风格规范：文档、方案、commit/PR、群消息的内容取舍、排版、用词、标点，以及要避开的 AI 味写法
+- **[tuning](./skills/tuning/SKILL.md)** — Process `/// fix:`, `/// refactor:`, `/// ??:` revision directives left in code after review (user-invoked via `/tuning`)
+
 ## Development
 
 Requires [pnpm](https://pnpm.io/) for package management and [Bun](https://bun.sh/) as the script runtime.

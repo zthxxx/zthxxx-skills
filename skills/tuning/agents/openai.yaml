@@ -1,0 +1,6 @@
+interface:
+  display_name: "Tuning Code"
+  short_description: "Tuning code with inline `/// fix:` `/// refactor:` "
+
+policy:
+  allow_implicit_invocation: false

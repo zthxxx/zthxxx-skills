@@ -4,12 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This is a personal Claude Code extensions repository containing both **skills** (auto-triggered by context) and **commands** (explicitly invoked by the user via `/command`).
+This is a personal Claude Code extensions repository containing **skills**, stored as `skills/<name>/SKILL.md` — markdown files with YAML frontmatter (`name`, `description`, etc.).
 
-- **Skills** — stored in `skills/<name>/SKILL.md`, triggered automatically when Claude detects a matching context
-- **Commands** — stored in `commands/<namespace>/<name>.md`, invoked explicitly by the user (e.g., `/zthxxx:tuning`)
-
-Both are markdown files with YAML frontmatter (`name`, `description`, etc.).
+A skill is either auto-triggered when Claude detects a matching context, or (with `disable-model-invocation: true` in frontmatter) invoked explicitly by the user via `/<name>`.
 
 ## Tech Stack
 
@@ -49,28 +46,22 @@ bun run <script-path>
 ## Repository Structure
 
 ```
-commands/
-  zthxxx/        # Namespace — commands invoked as /zthxxx:<name>
-    tuning.md    # /zthxxx:tuning
-skills/          # Auto-triggered skills (SKILL.md per subdirectory)
+skills/          # Skills (SKILL.md per subdirectory, optional references/ and agents/)
 dict/            # CSpell custom dictionaries
 package.json     # Dependency management for the repo
 ```
 
 ## Maintenance Rules
 
-When creating or modifying a skill or command:
+When creating or modifying a skill:
 
-1. Commands: place as `commands/<namespace>/<name>.md`; Skills: place as `skills/<name>/SKILL.md`
-2. Update `README.md` — add it to the corresponding listing with a brief description
+1. Place it as `skills/<name>/SKILL.md`
+2. Update `README.md` — add it to the skills listing with a brief description
 3. Update this `CLAUDE.md` — add it to the catalog below
 
 ## Catalog
 
-### Commands
-
-- **zthxxx:tuning** — Processes `/// fix:`, `/// refactor:`, `/// ??:` revision directives from user code review. Rigid 7-phase workflow: project context → discover → read all → cross-reference & plan → execute with checkpoints → verify → final review & summary.
-
 ### Skills
 
-_(No skills yet)_
+- **say-it-pro** — 工作场景写作与对话风格规范：文档、方案、commit/PR、群消息如何取舍内容、排版、用词、标点，以及要主动避开的 AI 味写法。Auto-triggered；references 按需加载
+- **tuning** — Processes `/// fix:`, `/// refactor:`, `/// ??:` revision directives from user code review. Rigid 7-phase workflow: project context → discover → read all → cross-reference & plan → execute with checkpoints → verify → final review & summary. User-invoked via `/tuning`

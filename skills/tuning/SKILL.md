@@ -8,6 +8,7 @@ disable-model-invocation: true
 
 This command processes **revision directives** — inline markers that users leave in code after reviewing changes. These markers follow a fixed format and encode modification instructions, questions, or refactoring requests.
 
+
 ## Directive Types
 
 | Marker | Purpose | Action |
@@ -15,6 +16,7 @@ This command processes **revision directives** — inline markers that users lea
 | `/// fix:` | Bug fix or correction needed | Apply the fix described in the directive |
 | `/// refactor:` | Structural improvement needed | Refactor the code as described |
 | `/// ??:` | User is asking "why was this changed?" | Answer by adding a clarifying comment in the code |
+
 
 ## Directive Format
 
@@ -41,6 +43,7 @@ The marker `/// fix:`, `/// refactor:`, or `/// ??:` is a **fixed literal string
 
 Use `rg` to locate these markers. The search locates **where directives exist** — it does not extract the full context. You must read surrounding code yourself to understand what each directive refers to.
 
+
 ## Context Boundary
 
 The boundary of what a directive describes is intentionally fuzzy and varies case by case. You must judge by reading and understanding the user's intent:
@@ -51,6 +54,7 @@ The boundary of what a directive describes is intentionally fuzzy and varies cas
 - Use your understanding of the user's intent and the code structure to decide where the directive's scope ends
 
 `rg` only helps you find the starting points. The real context discovery happens when you read the surrounding code.
+
 
 ## Overall Workflow
 
@@ -71,6 +75,7 @@ flowchart TD
 
 ---
 
+
 ## Phase 1: Understand Project Context
 
 Before processing any directives, build an understanding of the project:
@@ -79,6 +84,7 @@ Before processing any directives, build an understanding of the project:
 2. Read `AGENTS.md` if it exists — understand agent-specific guidelines
 3. Check for OpenSpec specs in the project (e.g., `docs/`, `specs/`, or spec files referenced in CLAUDE.md) — understand design intent and requirements
 4. This context informs how you interpret directives, what coding conventions to follow, and what verification commands are available
+
 
 ## Phase 2: Discover All Directives
 
@@ -89,6 +95,7 @@ rg -n '/// (fix|refactor|\?\?):' -g '!*.md' -g '!*.json'
 ```
 
 Report what you found: how many directives, in which files, of which types.
+
 
 ## Phase 3: Read & Understand All Contexts
 
@@ -101,6 +108,7 @@ For **every** directive found, read enough surrounding context to understand its
 
 A single line of context is never sufficient. When in doubt, read more.
 
+
 ## Phase 4: Cross-Reference & Plan
 
 Now that you have read all directives and their contexts, analyze them as a group:
@@ -109,6 +117,7 @@ Now that you have read all directives and their contexts, analyze them as a grou
 2. **Trace impact** — a single directive may require changes across multiple call sites, consumers, or test files
 3. **Detect conflicts** — if two directives contradict each other, flag them
 4. **Plan execution order** — based on relationships and dependencies, decide the order in which directives should be processed. Group related directives together.
+
 
 ### Clarification Gate
 
@@ -121,6 +130,7 @@ If any of the following are true, **stop and ask the user** before proceeding. L
 - [ ] The directive references external context you can't find in the project
 
 Do NOT proceed until every question is resolved by the user.
+
 
 ### Present Checkpoint List
 
@@ -147,6 +157,7 @@ Wait for the user to confirm the plan before executing.
 
 ---
 
+
 ## Phase 5: Execute
 
 Process directives according to the checkpoint list. For each checkpoint:
@@ -155,6 +166,7 @@ Process directives according to the checkpoint list. For each checkpoint:
 2. **Keep the directive marker in place** — do not remove it yet
 3. Apply the change following the type-specific behavior below
 4. **Mark the checkpoint as done** and display the updated list to the user
+
 
 ### Behavior: `/// fix:`
 
@@ -185,6 +197,7 @@ flowchart TD
 4. Extract the desired code directly from the old version — copy it from git history, don't reconstruct from memory
 5. If the scope is ambiguous, ask the user
 
+
 ### Behavior: `/// refactor:`
 
 Refactor the code as described. Refactors often have a wider blast radius than fixes.
@@ -202,6 +215,7 @@ flowchart TD
 ```
 
 A refactor directive that says "extract this into a shared utility" means you need to find everywhere the pattern is duplicated, not just the one location with the marker.
+
 
 ### Behavior: `/// ??:`
 
@@ -222,6 +236,7 @@ flowchart TD
 - Match the project's existing comment style and conventions
 - Goal: if someone reads this code a year from now, the comment should prevent the same question
 
+
 ### Preserving Context
 
 During execution, watch for directives that contain **context information that was previously missing from the codebase** — domain knowledge, gotchas, design decisions, pitfalls. This information must be preserved:
@@ -233,6 +248,7 @@ Also record any pitfalls you encounter during the fix itself — traps that futu
 
 ---
 
+
 ## Phase 6: Verification
 
 After all directives have been processed, run the project's verification steps. Check `CLAUDE.md`, `package.json` scripts, and project conventions for available verification commands. This typically includes:
@@ -243,6 +259,7 @@ After all directives have been processed, run the project's verification steps. 
 - **Build** — if applicable
 
 If any verification fails, diagnose and fix the issue before proceeding. The fix should not break what was already working.
+
 
 ## Phase 7: Final Review & Cleanup
 
@@ -256,6 +273,7 @@ After all directives are processed and verification passes:
 3. Only after confirming a directive was properly addressed, remove the `/// fix:`, `/// refactor:`, or `/// ??:` marker
 4. If any directive wasn't fully addressed, **leave the marker in place** and explain why
 
+
 ### Output Summary
 
 Present a final summary to the user:
@@ -263,26 +281,31 @@ Present a final summary to the user:
 ```
 ## Tuning Summary
 
+
 ### Completed
 - [x] 1. `src/api/client.ts:42` — fix: added null check for response.data
 - [x] 2. `src/api/client.ts:87` + `src/api/types.ts:15` — refactor: extracted SharedErrorType
 - [x] 3. `src/utils/parse.ts:23` — ??: added comment explaining regex change
 - [x] 4. `tests/api.test.ts:156` — fix: reverted assertion to original
 
+
 ### Preserved Context
 - `src/api/client.ts:45` — added comment about API returning null on 204 responses
 - `docs/specs/api-design.md` — added note about error type unification rationale
+
 
 ### Verification
 - Lint: ✓
 - Type check: ✓
 - Tests: ✓ (24/24 passed)
 
+
 ### Remaining (if any)
 - (none)
 ```
 
 ---
+
 
 ## Key Principles
 
@@ -295,6 +318,7 @@ Present a final summary to the user:
 **Preserve institutional knowledge.** Users sometimes embed important context in their review comments that doesn't exist anywhere else in the codebase. When you remove the directive marker, that knowledge disappears unless you deliberately capture it in a comment or spec.
 
 **Git is your time machine.** For revert requests, always go to the source — read the actual old code from git history. Don't guess what the old version looked like.
+
 
 ## Tool Requirements
 

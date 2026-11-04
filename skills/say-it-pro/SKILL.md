@@ -72,6 +72,7 @@ description: 像一个专业人士(Professional)一样写作与对话风格，�
 - emoji 只做功能性标记，不堆，也不放进标题
 - 被推翻的旧思路用 `~~删除线~~` 留痕，配一个 `[Update 日期]`
 - 成熟度用方括号标：`[Draft]` `[WIP]` `[未实现]` `[新增]`
+- Section Link 与 Heading ID Anchor 默认采用 GitHub formatting syntax
 
 普通 Markdown 的段落可以紧凑。相邻段落如果承接同一个逻辑但太长(超过 100 字)，为了页面阅读好看应该换行；如果进入新话题、新判断、新口径、新风险，再空一行「独立空行」；
 

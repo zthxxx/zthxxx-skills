@@ -2,6 +2,11 @@
 claude
 cspell
 feishu
+mtimes
+pocock
+Pocock
 shopt
+SSOT
 tsconfig
+YYMMDDHHmm
 zthxxx

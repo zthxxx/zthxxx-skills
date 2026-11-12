@@ -27,6 +27,20 @@ Code review 批注的批量执行器，用 `/tuning` 手动调用
 Review 时在代码里留下 `/// fix:` `/// refactor:` `/// ??:` 行内批注，运行后 Agent 扫描全部批注、通读上下文、列出计划待确认，再逐条修改并跑 lint/测试验证，最后清理批注标记；批注里带的领域知识会保留成代码注释或写进 spec
 
 
+### [use-session](./skills/use-session/)
+
+Agent 与人在仓库里协作的 session 规范：一件事项一个 `sessions/<name>/` 工作区，工作过程进 git，人能看见、按事聚合、并行不撞、断点可恢复
+
+接入后由 Agent 常驻加载；配套的建立、接手、归档、恢复脚本随 skill 分发，只依赖 Bun
+
+
+### [setup-use-session](./skills/setup-use-session/)
+
+让一个仓库接入 use-session，用 `/setup-use-session` 手动调用
+
+检查环境、写入常驻指引，处理与现有规范和第三方 skills (目前内置 Matt Pocock 系列) 的冲突，并迁移文件；跑完后仓库就是 use-session 的结构
+
+
 ## Development
 
 Requires [pnpm](https://pnpm.io/) for package management and [Bun](https://bun.sh/) as the script runtime.

@@ -818,8 +818,9 @@ describe('createSession', () => {
       for (const subdir of sessionSubDirs) {
         expect(fs.statSync(path.join(dir, subdir)).isDirectory()).toBe(true)
       }
-      // session 根下只有骨架子目录与主记录 CONTEXT.md
-      expect(fs.readdirSync(dir).sort()).toEqual([...sessionSubDirs, 'CONTEXT.md'].sort())
+      // session 根下只有骨架的类目录与主记录 CONTEXT.md
+      const topDirs = new Set(sessionSubDirs.map(subdir => subdir.split('/')[0]))
+      expect(fs.readdirSync(dir).sort()).toEqual([...topDirs, 'CONTEXT.md'].sort())
       // CONTEXT.md = 模板原文，所有 {{SessionTitle}}(含带空格写法)替换为 title
       expect(fs.readFileSync(path.join(dir, 'CONTEXT.md'), 'utf8')).toBe(renderedTemplate(name))
       // 再建同名 → 报错，且已有内容不动

@@ -61,7 +61,8 @@ User 提供目标、约束和影响结果的选择；Agent 查证事实、整理
 
 ## 上下文隔离
 
-执行任务时，默认不读取当前 session 以外的 session 和 `archive/`：别的事项的中间过程与过时结论会干扰当前判断，归档内容只是留痕、不是参考；同一个仓库级 issue 被多个 session 分头尝试不同方案时，也靠这条让各方案互不影响
+执行任务时，默认不读取当前 session 以外的 session 和 `archive/`：别的事项的中间过程与过时结论会干扰当前判断，归档内容只是留痕、不是参考；
+同一个仓库级 issue 被多个 session 分头尝试不同方案时，也靠这条让各方案互不影响
 
 只有任务本身需要跨 session 分析、或用户明确要求时，才读取它们
 
@@ -78,7 +79,10 @@ User 提供目标、约束和影响结果的选择；Agent 查证事实、整理
 
 session 的骨架目录由创建脚本生成，其余在某类内容需要独立维护或跨上下文读取时才建
 
-内容归类存放：每类内容进对应的目录，类目录里的内容再按来源或类型分到子目录，用户追溯时顺着目录就能找到同类内容；全部平铺在一层，就难以分辨哪些属于同一类。下面列出的子目录 (如 `artifacts/minutes/`、`.logs/.playwright-cli/`) 只是分类示例，执行中需要别的分类时按同样方式自行安排。按内容分类：
+内容归类存放：每类内容进对应的目录，类目录里的内容再按来源或类型分到子目录，用户追溯时顺着目录就能找到同类内容；全部平铺在一层，就难以分辨哪些属于同一类。
+下面列出的子目录 (如 `artifacts/minutes/`、`.logs/.playwright-cli/`) 是预设分类示例，执行中需要别的分类时按同样方式自行安排。
+
+按内容分类：
 
 主要记录
 
@@ -87,11 +91,13 @@ session 的骨架目录由创建脚本生成，其余在某类内容需要独立
 交付结果
 
 - `docs/` —— 文档、定义类交付：凡是要成型的产出 (样板页、文档正文、分析结论等) 直接写这里，不先写进 `CONTEXT.md` 再搬出，`CONTEXT.md` 放 ref link 过去
-  - 只引用 `assets/` 中的产出素材，不引用下载素材与日志：沉淀时只有 docs 和它引用的 assets 会被带走 (见 [沉淀复用](#沉淀复用))，其他引用会断链；要用下载素材时，先处理成产出素材放进 `assets/`，或写成 docs 的正文
+  - 只引用 `assets/` 中的产出素材，不引用下载素材与日志：沉淀时只有 docs 和它引用的 assets 会被带走 (见 [沉淀复用](#沉淀复用))，其他引用会断链；
+    要用下载素材时，先处理成产出素材放进 `assets/`，或写成 docs 的正文
   - session spec 定义文件默认推荐 `docs/spec.md` —— 覆盖其他 skill 的 spec 位置约定
   - 仓库级与 session 级的 specs 如何组织不由本规范定义
 - `scripts/` —— 本 session 写的零散脚本，以及这些脚本的测试脚本；同样直接写这里、`CONTEXT.md` 只 link
-- `playground/` —— 工程原型类：需要工程化的原型，包含一次性原型；判断看它是否要作为一个整体来构建或启动 —— 有结构化组织的复杂文件或编译产物，或者是带 UI 的 App、App 扩展的一部分；逐个文件直接运行的脚本即使文件多、有共享模块，也放 `scripts/`
+- `playground/` —— 工程原型类：需要工程化的原型，包含一次性原型；判断看它是否要作为一个整体来构建或启动 —— 有结构化组织的复杂文件或编译产物，或者是带 UI 的 App、App 扩展的一部分；
+  逐个文件直接运行的脚本即使文件多、有共享模块，也放 `scripts/`
   - 按需分子目录，一个原型工程占一个子目录，同一问题的多个原型也各占一个
   - 进 git，依赖与构建产物用各原型工程自己的 `.gitignore` 排除；子目录内部如何组织不由本规范定义
 
@@ -118,7 +124,8 @@ session 的骨架目录由创建脚本生成，其余在某类内容需要独立
 
 不放进 session 的临时文件 (系统 `$TMPDIR`)
 
-文件放 session 还是 `$TMPDIR`，看之后有没有人需要凭本事项再找到它，不看它用完是否丢弃；其他 skill 默认写到 `/tmp`、scratchpad 等临时位置的文件同样按此判断，属于本事项的写进 session —— 覆盖其他 skill 的临时写入位置约定
+文件放 session 还是 `$TMPDIR`，看之后有没有人需要凭本事项再找到它，不看它用完是否丢弃；其他 skill 默认写到 `/tmp`、scratchpad 等临时位置的文件同样按此判断，
+属于本事项的写进 session —— 覆盖其他 skill 的临时写入位置约定
 
 - 判断依据
   - 归属：内容属于本事项的工作过程或产出，放 session；只是工具、进程自己的运行文件，放 `$TMPDIR`
@@ -144,7 +151,8 @@ session 的骨架目录由创建脚本生成，其余在某类内容需要独立
   - 关键事实与决策 Facts/Decisions —— 已核实的关键事实、仍有效的限制及一手来源；需要保留的决策依据写进本 session 的 `adr/`，这里引用结论
   - 关联 Refs —— 相关产物和一手资料
 - 编辑时保留 blockquote 里的引导说明，章节正文与引导说明、下一标题之间留空行
-- frontmatter 记录处理过本 session 的所有 Agent 会话 id，用于找回对应的对话：创建脚本写入创建者的 id，之后接手的 Agent 用接手脚本追加自己的 id (见 [交接与接手](#交接与接手))；只有一个 id 时是单值，多个时是列表，取不到的 id 保持 null
+- frontmatter 记录处理过本 session 的所有 Agent 会话 id，用于找回对应的对话：创建脚本写入创建者的 id，之后接手的 Agent 用接手脚本追加自己的 id (见 [交接与接手](#交接与接手))；
+  - 只有一个 id 时是单值，多个时是列表，取不到的 id 保持 null
 
 
 ## 协作记录的仓库与事项两个层次
@@ -156,7 +164,8 @@ session 的骨架目录由创建脚本生成，其余在某类内容需要独立
 
 - **仓库级** —— 明显属于整个仓库、跨 session 通用，或用户要求记到顶层的(如仓库目录结构的调整)，context 根才是仓库根。ADR 不归档，issue 完成后单独归档(见 [归档](#归档))
   - 仓库级 `issues/` 也能放与手头 session 无关、尚无归属的新问题(见 [issue 的生命周期](#issue-的生命周期))
-- **session 级(默认)** —— 事项层次对应的容器目录是 session 目录，其中的记录称 session 级：为某个事项做领域建模、澄清决策、拆分工作时，context 根是 `sessions/<name>/`；这些记录随 session 一起归档冻结
+- **session 级(默认)** —— 事项层次对应的容器目录是 session 目录，其中的记录称 session 级：为某个事项做领域建模、澄清决策、拆分工作时，context 根是 `sessions/<name>/`；
+  这些记录随 session 一起归档冻结
 
 ADR 与 issue 的文件名都以 `YYMMDDHHmm-` 为前缀，名字部分同 session 命名规则(不带空格、`-` 分隔) —— 覆盖其他 skill 的位置与编号约定：多个 Agent 并行时各取最大序号加一会撞序号，且时间戳比序号多带了时间顺序
 
@@ -176,7 +185,8 @@ ADR 与 issue 的文件名都以 `YYMMDDHHmm-` 为前缀，名字部分同 sessi
 issue 是一份轻量记录：一项待讨论/待决策的问题、一个想法，或一件准备要做但还没想完整的事。它的主要价值是作为与用户交互讨论的位置，用户可以直接在 issue 文件里回答
 
 - 想清楚后，issue 也可以补成派发给 Agent 或 Subagent 的执行工单；但 session 内一般不必为了派发执行而拆 issue
-- issue 只承载问题、讨论与结论。执行起来要积累上下文(写材料、生成中间产物、跨多轮推进)时，就满足 [何时建 session](#何时建-session)，由 session 承载执行：session 级 issue 由所在 session 承载，仓库级 issue 由认领它的 session 承载(见 [issue 的生命周期](#issue-的生命周期))
+- issue 只承载问题、讨论与结论。执行起来要积累上下文(写材料、生成中间产物、跨多轮推进)时，就满足 [何时建 session](#何时建-session)，由 session 承载执行
+  - session 级 issue 由所在 session 承载，仓库级 issue 由认领它的 session 承载(见 [issue 的生命周期](#issue-的生命周期))
 - `issues/YYMMDDHHmm-<名字>.md`，时间戳取 issue 创建的时刻
 - 字段、状态与各项操作的具体写法不由本规范定义
 - 依赖顺序只由 `Blocked by` 表达，写被依赖 issue 的文件名
@@ -201,14 +211,16 @@ ADR(Architecture Decision Record)记录一项已确认的决策：决定了什�
 
 - session 级交接前，先把 `CONTEXT.md` 更新到当前阶段；值得保留的信息只在 `CONTEXT.md` 维护，交接总结只帮新对话起步
   - 没做完的事只写进交接总结，不在 `CONTEXT.md` 里记「下一步」：大部分事项 Agent 直接做完即可，注意力不该花在反复更新下一步记录上
-- 交接总结写到所属层次 context 根的 `.logs/YYMMDDHHmm-<事项title>.handoff.md`(session 级 `sessions/<name>/.logs/`，仓库级仓库根的 `.logs/`)；其他 skill 默认写到临时位置的交接文件，也改为写到这里 (判断见 [目录结构](#目录结构) 的临时文件)
+- 交接总结写到所属层次 context 根的 `.logs/YYMMDDHHmm-<事项title>.handoff.md`(session 级 `sessions/<name>/.logs/`，仓库级仓库根的 `.logs/`)；
+  - 其他 skill 默认写到临时位置的交接文件，也改为写到这里 (判断见 [目录结构](#目录结构) 的临时文件)
 
 **交接完成的标准**：下一位 Agent 凭交接总结、`CONTEXT.md` 和关联资料，就能知道要交付什么、依据什么、怎样验收，以及哪些还没做完。切换上下文前按这条标准检查
 
 **新 Agent 接手的读取顺序**：
 
 0. 项目的 `AGENTS.md` 与本规范(通常已默认加载)
-1. 目标 session 的 `CONTEXT.md`；用户给了上一份 Agent 的 handoff 文件时一并阅读；运行 `bun .agents/skills/use-collab-session/scripts/takeover.ts <session-name>` 把自己的会话 id 登记进 frontmatter (已在其中则不改动)
+1. 目标 session 的 `CONTEXT.md`；用户给了上一份 Agent 的 handoff 文件时一并阅读；
+  - 运行 `bun .agents/skills/use-collab-session/scripts/takeover.ts <session-name>` 把自己的会话 id 登记进 frontmatter (已在其中则不改动)
 2. 按 `CONTEXT.md` 中的目标、验收条件与关键事项进展 Progress 判断整体进展
 3. 根据当前 session 工作结果分析，读取关联的 specs、术语、ADR 等信息
 4. 对照实际文件、git 状态与已有验证结果，结合交接总结里没做完的事，自行判断下一步再继续工作
@@ -248,7 +260,8 @@ session 的创建、接手登记、归档、恢复，以及仓库级 issue 的�
 
 ### 沉淀复用
 
-用户觉得有复用价值时，要求把产出 `docs/` `scripts/` **复制**一份到顶层长期维护。沉淀没有脚本，由 Agent 复制到用户指定的顶层位置；`docs/` 引用到的 `assets/` 一并复制，并改写引用路径。沉淀内容和 session 原件脱钩，后续迭代沉淀件不会动到归档，沉淀件里也不用标来源 —— 内容本身就能搜回原始出处。沉淀件要自包含，不回指 session 里的一次性输入(`artifacts/` 等)
+用户觉得有复用价值时，要求把产出 `docs/` `scripts/` **复制**一份到顶层长期维护。沉淀没有脚本，由 Agent 复制到用户指定的顶层位置；`docs/` 引用到的 `assets/` 一并复制，并改写引用路径。
+沉淀内容和 session 原件脱钩，后续迭代沉淀件不会动到归档，沉淀件里也不用标来源 —— 内容本身就能搜回原始出处。沉淀件要自包含，不回指 session 里的一次性输入(`artifacts/` 等)
 
 ### 归档
 

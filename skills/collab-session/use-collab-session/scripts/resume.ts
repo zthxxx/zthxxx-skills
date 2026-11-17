@@ -19,12 +19,12 @@
  * - 只做 mv，不碰 git —— 纯移动应先单独 commit，之后才开始修改内容
  *
  * 用法(--help / 无参数时显示)：
- *   bun .agents/skills/use-session/scripts/resume.ts
- *   bun .agents/skills/use-session/scripts/resume.ts <session-name | 完整归档目录名> [...]
- *   bun .agents/skills/use-session/scripts/resume.ts --issue <file> [<file> ...]
+ *   bun .agents/skills/use-collab-session/scripts/resume.ts
+ *   bun .agents/skills/use-collab-session/scripts/resume.ts <session-name | 完整归档目录名> [...]
+ *   bun .agents/skills/use-collab-session/scripts/resume.ts --issue <file> [<file> ...]
  *
  * 单测隔离: resumeSession() / resumeSessions() / resumeIssues() 的目录可经 options 注入，
- * 测试用临时目录替换生产的 sessions/、archive/sessions/、issues/、archive/issues/(见 zthxxx-skills 仓库的 tests/use-session/session.test.ts)
+ * 测试用临时目录替换生产的 sessions/、archive/sessions/、issues/、archive/issues/(见 zthxxx-skills 仓库的 tests/collab-session/use-collab-session/session.test.ts)
  */
 
 import type { IssuePaths, SessionPaths } from './lib'
@@ -126,11 +126,11 @@ const HELP = `恢复(resume)已归档 session: archive/sessions/<时间戳>-<nam
 恢复已归档的仓库级 issue: archive/issues/<file> → issues/<file>(文件名不变)
 
 用法：
-  bun .agents/skills/use-session/scripts/resume.ts                    终端下进多选列表，勾选后一次性恢复 session
-  bun .agents/skills/use-session/scripts/resume.ts <session-name>…    按裸名匹配，可传多个
-  bun .agents/skills/use-session/scripts/resume.ts <完整归档目录名>…  如 2607091408-xxx；同名归档有多个时用这种写法
-  bun .agents/skills/use-session/scripts/resume.ts --issue <file>…    恢复仓库级 issue，可传多个；接受 archive/issues/<file> 写法
-  bun .agents/skills/use-session/scripts/resume.ts --help             显示本帮助
+  bun .agents/skills/use-collab-session/scripts/resume.ts                    终端下进多选列表，勾选后一次性恢复 session
+  bun .agents/skills/use-collab-session/scripts/resume.ts <session-name>…    按裸名匹配，可传多个
+  bun .agents/skills/use-collab-session/scripts/resume.ts <完整归档目录名>…  如 2607091408-xxx；同名归档有多个时用这种写法
+  bun .agents/skills/use-collab-session/scripts/resume.ts --issue <file>…    恢复仓库级 issue，可传多个；接受 archive/issues/<file> 写法
+  bun .agents/skills/use-collab-session/scripts/resume.ts --help             显示本帮助
 
 多选键位(候选按目录内最新改动时间倒序)：
   ↑↓ 移动 · space 勾选 · a 全选 · i 反选 · enter 确认 · Ctrl-C/Esc 取消

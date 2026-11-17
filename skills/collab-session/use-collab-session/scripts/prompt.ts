@@ -14,7 +14,7 @@
  * - 画面渲染指向 stderr，执行结果由调用方打到 stdout —— 重定向 stdout 拿到的仍是纯结果
  * - 确认、取消、异常任何一种结束方式，都恢复终端的 raw mode、光标显示，并暂停 stdin
  *
- * 分层：按键解码 decodeKeys、状态迁移 stepPicker、渲染 renderPicker 都是纯函数，由 zthxxx-skills 仓库的 tests/use-session/session.test.ts 做 property-based 覆盖；
+ * 分层：按键解码 decodeKeys、状态迁移 stepPicker、渲染 renderPicker 都是纯函数，由 zthxxx-skills 仓库的 tests/collab-session/use-collab-session/session.test.ts 做 property-based 覆盖；
  * pickSessions 只负责 TTY 读写，用真 pty 驱动手工验证
  *
  * 用法(仅供 archive.ts / resume.ts 在 TTY 下调用)：

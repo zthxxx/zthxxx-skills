@@ -1,6 +1,6 @@
 interface:
-  display_name: Setup use-session
-  short_description: 让当前仓库接入 use-session
+  display_name: Setup collab-session
+  short_description: 让当前仓库接入 use-collab-session
 
 policy:
   allow_implicit_invocation: false

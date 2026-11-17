@@ -1,5 +1,5 @@
 ---
-name: use-session
+name: use-collab-session
 description: "session 协作规范：一件事项一个 `sessions/<name>/` 工作区。开始任务、放置中间产物、记录 issue、ADR 或术语表、交接与接手、归档与恢复时使用"
 user-invocable: false
 ---
@@ -45,7 +45,7 @@ user-invocable: false
   - 写在开头会和归档时间戳前缀混淆，还会被归档工具当成已归档名拒绝
 - 并行时发现已有同名 session，在末尾加 `-2` `-3` 去重名
 
-创建需用 `bun .agents/skills/use-session/scripts/new.ts <title>`：建 `sessions/<title>/` 的骨架目录等 (见 [目录结构](#目录结构))，并从模板自动生成 `CONTEXT.md`、填入标题和 session id
+创建需用 `bun .agents/skills/use-collab-session/scripts/new.ts <title>`：建 `sessions/<title>/` 的骨架目录等 (见 [目录结构](#目录结构))，并从模板自动生成 `CONTEXT.md`、填入标题和 session id
 
 
 ## User 与 Agent 怎么协作
@@ -206,7 +206,7 @@ ADR(Architecture Decision Record)记录一项已确认的决策：决定了什�
 **新 Agent 接手的读取顺序**：
 
 0. 项目的 `AGENTS.md` 与本规范(通常已默认加载)
-1. 目标 session 的 `CONTEXT.md`；用户给了上一份 Agent 的 handoff 文件时一并阅读；运行 `bun .agents/skills/use-session/scripts/takeover.ts <session-name>` 把自己的会话 id 登记进 frontmatter (已在其中则不改动)
+1. 目标 session 的 `CONTEXT.md`；用户给了上一份 Agent 的 handoff 文件时一并阅读；运行 `bun .agents/skills/use-collab-session/scripts/takeover.ts <session-name>` 把自己的会话 id 登记进 frontmatter (已在其中则不改动)
 2. 按 `CONTEXT.md` 中的目标、验收条件与关键事项进展 Progress 判断整体进展
 3. 根据当前 session 工作结果分析，读取关联的 specs、术语、ADR 等信息
 4. 对照实际文件、git 状态与已有验证结果，结合交接总结里没做完的事，自行判断下一步再继续工作
@@ -252,9 +252,9 @@ session 的创建、接手登记、归档、恢复，以及仓库级 issue 的�
 
 用户确认收尾后通常手动执行：
 
-- session：`bun .agents/skills/use-session/scripts/archive.ts <session-name>…` 可传多个，`--all` 归档全部、与名字互斥；
+- session：`bun .agents/skills/use-collab-session/scripts/archive.ts <session-name>…` 可传多个，`--all` 归档全部、与名字互斥；
   - 会把整个目录**无改动**移到 `archive/sessions/<YYMMDDHHmm>-<session-name>/`。时间戳由 git 推导，反映这件事实际完成的时刻而非归档动作执行的时刻；放在前面，归档目录按名称排序即按时间排序
-- 仓库级 issue：`bun .agents/skills/use-session/scripts/archive.ts --issue <issue-name>…`，从 `issues/` 移到 `archive/issues/`，文件名不变
+- 仓库级 issue：`bun .agents/skills/use-collab-session/scripts/archive.ts --issue <issue-name>…`，从 `issues/` 移到 `archive/issues/`，文件名不变
 
 当用户要求 Agent 执行归档时，也需要使用脚本执行
 
@@ -264,7 +264,7 @@ session 的创建、接手登记、归档、恢复，以及仓库级 issue 的�
 
 只有用户明确要求继续修改已归档的 session 或仓库级 issue 时才恢复：
 
-1. session 用 `bun .agents/skills/use-session/scripts/resume.ts <session-name>…` 去掉时间戳前缀、移回 `sessions/<session-name>/`，同名多次归档时按报错提示传完整归档目录名；
-2. 仓库级 issue 用 `bun .agents/skills/use-session/scripts/resume.ts --issue <issue-name>…` 移回 `issues/`
+1. session 用 `bun .agents/skills/use-collab-session/scripts/resume.ts <session-name>…` 去掉时间戳前缀、移回 `sessions/<session-name>/`，同名多次归档时按报错提示传完整归档目录名；
+2. 仓库级 issue 用 `bun .agents/skills/use-collab-session/scripts/resume.ts --issue <issue-name>…` 移回 `issues/`
 3. git 提交这次纯移动后，再开始修改内容
 4. 改完按 [完成后提交与推送](#完成后提交与推送) 再走一遍

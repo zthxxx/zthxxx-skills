@@ -1,19 +1,19 @@
-# setup-use-session
+# setup-collab-session
 
-让一个仓库接入 [use-session](../use-session/)。用 `/setup-use-session` 手动调用 (Codex 里用 `$setup-use-session`)
+让一个仓库接入 [use-collab-session](../use-collab-session/)。用 `/setup-collab-session` 手动调用 (Codex 里用 `$setup-collab-session`)
 
 ## 安装
 
 ```bash
-npx skills add zthxxx/zthxxx-skills --skill use-session --skill setup-use-session --agent claude-code --agent codex
+npx skills add zthxxx/zthxxx-skills --skill use-collab-session --skill setup-collab-session --agent claude-code --agent codex
 ```
 
 ## 怎么用
 
-在仓库里运行 `/setup-use-session`，Agent 会：
+在仓库里运行 `/setup-collab-session`，Agent 会：
 
 1. 检查 git 与 Bun，读项目现有的 Agent 指令文件、规则文档、目录结构和已装的第三方 skills
-2. 列出和 use-session 冲突的规则、需要移动的文件，交给你确认
+2. 列出和 use-collab-session 冲突的规则、需要移动的文件，交给你确认
 3. 写入常驻指引、链好 `.claude/skills`、补 `.gitignore`，按确认的清单改规则、移动文件并 commit
 4. 验证脚本能运行、没有断掉的引用
 

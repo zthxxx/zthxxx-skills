@@ -3,13 +3,13 @@
  * 每个用例在 os.tmpdir() 下 mkdtemp 构造同构的 sessions/、archive/sessions/、issues/、archive/issues/，
  * 经 options 注入替换生产默认路径、时间戳传固定值，绝不触碰仓库真实目录
  *
- * 用法: bun test tests/use-session/
+ * 用法: bun test tests/collab-session/use-collab-session/
  *
  * 测试风格：以 property-based 为主 —— 固定种子的 PRNG 生成随机 session 名与时间戳，
  * 断言不变量(归档命名规则 / archive→resume 往返恒等 / 内容保持)，辅以边界错误用例
  */
 
-import type { PickerKey, SessionChoice } from '../../skills/use-session/scripts/prompt'
+import type { PickerKey, SessionChoice } from '../../../skills/collab-session/use-collab-session/scripts/prompt'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
@@ -23,9 +23,9 @@ import {
   ISSUE_COMMIT_SUBJECT,
   resolveGitTimestamp,
   stageMoves,
-} from '../../skills/use-session/scripts/archive'
-import { formatTimestamp, latestMtimeMs, listSessionDirs } from '../../skills/use-session/scripts/lib'
-import { createSession, readSessionIds, sessionSubDirs } from '../../skills/use-session/scripts/new'
+} from '../../../skills/collab-session/use-collab-session/scripts/archive'
+import { formatTimestamp, latestMtimeMs, listSessionDirs } from '../../../skills/collab-session/use-collab-session/scripts/lib'
+import { createSession, readSessionIds, sessionSubDirs } from '../../../skills/collab-session/use-collab-session/scripts/new'
 import {
   createPickerState,
   decodeKeys,
@@ -34,9 +34,9 @@ import {
   resizePicker,
   stepPicker,
   visibleRange,
-} from '../../skills/use-session/scripts/prompt'
-import { resumeIssues, resumeSession, resumeSessions } from '../../skills/use-session/scripts/resume'
-import { addSessionIds, sessionIdKeys, takeoverSession } from '../../skills/use-session/scripts/takeover'
+} from '../../../skills/collab-session/use-collab-session/scripts/prompt'
+import { resumeIssues, resumeSession, resumeSessions } from '../../../skills/collab-session/use-collab-session/scripts/resume'
+import { addSessionIds, sessionIdKeys, takeoverSession } from '../../../skills/collab-session/use-collab-session/scripts/takeover'
 
 // ---- 隔离的临时环境 ----
 
@@ -949,7 +949,7 @@ describe('readSessionIds', () => {
 
 // ---- 接手登记: 会话 id 追加进 CONTEXT.md frontmatter ----
 
-const PROD_TEMPLATE = fs.readFileSync(path.join(import.meta.dir, '../../skills/use-session/scripts/template/CONTEXT.md'), 'utf8')
+const PROD_TEMPLATE = fs.readFileSync(path.join(import.meta.dir, '../../../skills/collab-session/use-collab-session/scripts/template/CONTEXT.md'), 'utf8')
 const PROD_KEYS = sessionIdKeys(PROD_TEMPLATE)
 const ID_VARS = Object.keys(PROD_KEYS) as Array<keyof typeof PROD_KEYS>
 
@@ -1108,7 +1108,7 @@ describe('takeoverSession', () => {
 
 function runScript(script: string, args: string[]) {
   const result = Bun.spawnSync(
-    [process.execPath, path.join(import.meta.dir, '../../skills/use-session/scripts', script), ...args],
+    [process.execPath, path.join(import.meta.dir, '../../../skills/collab-session/use-collab-session/scripts', script), ...args],
     { stdout: 'pipe', stderr: 'pipe' },
   )
   return {

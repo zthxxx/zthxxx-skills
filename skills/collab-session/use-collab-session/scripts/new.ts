@@ -25,10 +25,10 @@
  * - 只建目录写文件，不碰 git
  *
  * 用法(--help / 无参数时显示)：
- *   bun .agents/skills/use-session/scripts/new.ts <title>
+ *   bun .agents/skills/use-collab-session/scripts/new.ts <title>
  *
  * 单测隔离: createSession() 的 sessions 目录、模板目录、环境变量都可经 options 注入，
- * 测试用临时目录替换生产的 sessions/ 与 template/、用普通对象替换 process.env(见 zthxxx-skills 仓库的 tests/use-session/session.test.ts)
+ * 测试用临时目录替换生产的 sessions/ 与 template/、用普通对象替换 process.env(见 zthxxx-skills 仓库的 tests/collab-session/use-collab-session/session.test.ts)
  */
 
 import type { SessionPaths } from './lib'
@@ -103,7 +103,7 @@ export function createSession(title: string, options: NewSessionOptions = {}): {
   }
   const dir = path.join(sessionsDir, name)
   if (fs.existsSync(dir)) {
-    throw new Error(`session 已存在，拒绝覆盖: ${dir}(并行撞名时按 use-session 的 SKILL.md「命名与创建」加 -2 -3 后缀)`)
+    throw new Error(`session 已存在，拒绝覆盖: ${dir}(并行撞名时按 use-collab-session 的 SKILL.md「命名与创建」加 -2 -3 后缀)`)
   }
   // 先读模板并完成变量替换、再建目录：模板缺失或含未知变量时直接报错退出，不留半截骨架
   const template = fs.readFileSync(path.join(templateDir, 'CONTEXT.md'), 'utf8')
@@ -118,18 +118,18 @@ export function createSession(title: string, options: NewSessionOptions = {}): {
 const HELP = `新建 session: 建立 sessions/<title>/ 的标准目录骨架 + 主记录 CONTEXT.md
 
 用法：
-  bun .agents/skills/use-session/scripts/new.ts <title>    title 即 session 目录名(命名约定见 use-session 的 SKILL.md「命名与创建」)
+  bun .agents/skills/use-collab-session/scripts/new.ts <title>    title 即 session 目录名(命名约定见 use-collab-session 的 SKILL.md「命名与创建」)
 
 行为：
   - 建立空目录: artifacts/ minutes/ docs/ assets/ scripts/
-  - CONTEXT.md 从 use-session 的 scripts/template/CONTEXT.md 复制，并替换模板中的 {{}} 变量:
+  - CONTEXT.md 从 use-collab-session 的 scripts/template/CONTEXT.md 复制，并替换模板中的 {{}} 变量:
       SessionTitle        = <title>
       ClaudeCodeSessionId = $CLAUDE_CODE_SESSION_ID(Claude Code 会话的 shell 里才有)
       CodexSessionId      = $CODEX_THREAD_ID(Codex 会话的 shell 里才有；兜底 $CODEX_SESSION_ID)
     两个 id 写进 CONTEXT.md 顶部 frontmatter，取不到写 null；
     之后可用 claude --resume <id> / codex resume <id> 接回创建它的会话
   - 目标已存在则报错；只建目录写文件，不碰 git
-  - User 与 Agent 均通过本脚本创建 session，按需拆文件的规则见 use-session 的 SKILL.md`
+  - User 与 Agent 均通过本脚本创建 session，按需拆文件的规则见 use-collab-session 的 SKILL.md`
 
 if (import.meta.main) {
   await runCli(HELP, (args) => {

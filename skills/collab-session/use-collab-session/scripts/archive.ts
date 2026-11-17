@@ -28,14 +28,14 @@
  *   不做 commit：末尾打印一段建议的 `git commit` 命令(subject 固定、body 逐行列名字)，由调用方执行
  *
  * 用法(--help / 无参数时显示)：
- *   bun .agents/skills/use-session/scripts/archive.ts
- *   bun .agents/skills/use-session/scripts/archive.ts <session-name> [<session-name> ...]
- *   bun .agents/skills/use-session/scripts/archive.ts --all
- *   bun .agents/skills/use-session/scripts/archive.ts --issue <file> [<file> ...]
+ *   bun .agents/skills/use-collab-session/scripts/archive.ts
+ *   bun .agents/skills/use-collab-session/scripts/archive.ts <session-name> [<session-name> ...]
+ *   bun .agents/skills/use-collab-session/scripts/archive.ts --all
+ *   bun .agents/skills/use-collab-session/scripts/archive.ts --issue <file> [<file> ...]
  *
  * 单测隔离: archiveSession() / archiveSessions() / archiveAllSessions() / archiveIssues() 只做 mv，
  * 目录与时间戳都可经 options 注入，测试用临时目录替换生产的 sessions/、archive/sessions/、issues/、archive/issues/；
- * git add 独立成 stageMoves()，由 CLI 层在 mv 之后调用，单测在 git init 过的临时仓库里验证(见 zthxxx-skills 仓库的 tests/use-session/session.test.ts)
+ * git add 独立成 stageMoves()，由 CLI 层在 mv 之后调用，单测在 git init 过的临时仓库里验证(见 zthxxx-skills 仓库的 tests/collab-session/use-collab-session/session.test.ts)
  */
 
 import type { IssuePaths, SessionPaths } from './lib'
@@ -213,11 +213,11 @@ const HELP = `归档 session: sessions/<name>/ → archive/sessions/<YYMMDDHHmm>
 归档仓库级 issue: issues/<file> → archive/issues/<file>(文件名不变)
 
 用法：
-  bun .agents/skills/use-session/scripts/archive.ts                  终端下进多选列表，勾选后一次性归档 session
-  bun .agents/skills/use-session/scripts/archive.ts <session-name>…  归档指定 session，可传多个
-  bun .agents/skills/use-session/scripts/archive.ts --all            归档 sessions/ 下所有 session 目录(跳过 . 开头)
-  bun .agents/skills/use-session/scripts/archive.ts --issue <file>…  归档仓库级 issue，可传多个；接受 issues/<file> 写法
-  bun .agents/skills/use-session/scripts/archive.ts --help           显示本帮助
+  bun .agents/skills/use-collab-session/scripts/archive.ts                  终端下进多选列表，勾选后一次性归档 session
+  bun .agents/skills/use-collab-session/scripts/archive.ts <session-name>…  归档指定 session，可传多个
+  bun .agents/skills/use-collab-session/scripts/archive.ts --all            归档 sessions/ 下所有 session 目录(跳过 . 开头)
+  bun .agents/skills/use-collab-session/scripts/archive.ts --issue <file>…  归档仓库级 issue，可传多个；接受 issues/<file> 写法
+  bun .agents/skills/use-collab-session/scripts/archive.ts --help           显示本帮助
 
 多选键位(候选按目录内最新改动时间倒序)：
   ↑↓ 移动 · space 勾选 · a 全选 · i 反选 · enter 确认 · Ctrl-C/Esc 取消

@@ -14,7 +14,7 @@
  * - 候选列表(listSessionDirs)按目录树内最新 mtime 倒序：刚动过的排最前，
  *   多选列表与 `--all` 共用同一份枚举与顺序
  * - 目录与时间戳都从函数入参可替换(defaultPaths 只是默认值)，
- *   单测在临时目录中构造同构环境注入替换，与生产环境隔离(见 zthxxx-skills 仓库的 tests/use-session/session.test.ts)
+ *   单测在临时目录中构造同构环境注入替换，与生产环境隔离(见 zthxxx-skills 仓库的 tests/collab-session/use-collab-session/session.test.ts)
  */
 
 import fs from 'node:fs'

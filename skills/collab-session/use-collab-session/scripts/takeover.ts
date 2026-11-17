@@ -16,9 +16,9 @@
  * - 只改 frontmatter 中的会话 id 字段，其余内容原样保留；可重复运行；不碰 git
  *
  * 用法(--help / 无参数时显示)：
- *   bun .agents/skills/use-session/scripts/takeover.ts <session-name>
+ *   bun .agents/skills/use-collab-session/scripts/takeover.ts <session-name>
  *
- * 单测隔离: takeoverSession() 的 sessions 目录、模板路径、环境变量都可经 options 注入(见 zthxxx-skills 仓库的 tests/use-session/session.test.ts)
+ * 单测隔离: takeoverSession() 的 sessions 目录、模板路径、环境变量都可经 options 注入(见 zthxxx-skills 仓库的 tests/collab-session/use-collab-session/session.test.ts)
  */
 
 import type { SessionPaths } from './lib'
@@ -151,7 +151,7 @@ export function takeoverSession(name: string, options: TakeoverOptions = {}): { 
 const HELP = `接手登记: 把当前 Agent 会话 id 追加进 sessions/<name>/CONTEXT.md 的 frontmatter
 
 用法：
-  bun .agents/skills/use-session/scripts/takeover.ts <session-name>    接受 sessions/<name>/ 路径写法
+  bun .agents/skills/use-collab-session/scripts/takeover.ts <session-name>    接受 sessions/<name>/ 路径写法
 
 行为：
   - 会话 id 取自环境变量 $CLAUDE_CODE_SESSION_ID、$CODEX_THREAD_ID(兜底 $CODEX_SESSION_ID)，

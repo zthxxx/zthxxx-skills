@@ -34,7 +34,7 @@ codex-session-id: {{CodexSessionId}}
 
 
 ## 关键事项进展 Progress
-> 抽象大体思路与关键事项 checklist，一眼看出什么执行完了、什么还没 —— 关键事项级别、不是原子步骤；可 link 上面的方案骨架或下面的决策与事实
+> 抽象大体思路与关键事项 checklist，一眼看出什么执行完了、什么还没，粒度是关键事项级别、不是原子步骤；可 link 上面的方案骨架或下面的决策与事实
 > 只在关键阶段边界更新，不为频繁更新 checklist 打断执行；细粒度进展由 session 里实际长出来的产物与 git commit 体现
 
 

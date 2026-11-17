@@ -1,5 +1,5 @@
 /**
- * session 目录与仓库级 issue 文件移动的共享配置与工具 —— 被 archive.ts / resume.ts 复用
+ * session 目录与仓库级 issue 文件移动的共享配置与工具，被 archive.ts / resume.ts 复用
  *
  * 定义：
  * - 生产环境目录：仓库顶层 `sessions/`(活跃 session)与 `archive/sessions/`(已归档 session)，
@@ -114,8 +114,8 @@ export function moveEntry(from: string, to: string, kind: EntryKind = 'dir'): { 
 }
 
 /**
- * 批量移动：先整体校验(源存在、目标不存在、目标互不重复)，任何一项不合法都不动任何条目 ——
- * 半截批量留下的一半已移动、一半没移动的状态，人还得自己对账，代价远高于整批重来
+ * 批量移动：先整体校验(源存在、目标不存在、目标互不重复)，任何一项不合法都不动任何条目，
+ * 否则半截批量留下的一半已移动、一半没移动的状态，人还得自己对账，代价远高于整批重来
  */
 export function moveEntries(moves: ReadonlyArray<{ from: string, to: string }>, kind: EntryKind = 'dir'): Array<{ from: string, to: string }> {
   const targets = new Set<string>()
@@ -158,7 +158,7 @@ export interface SessionDirEntry {
 }
 
 /**
- * 列出 root 下的 session 目录(跳过 `.` 开头目录与普通文件)，按目录内最新改动时间倒序 ——
+ * 列出 root 下的 session 目录(跳过 `.` 开头目录与普通文件)，按目录内最新改动时间倒序，
  * 刚动过的排最前，正是要归档 / 恢复的那些；同时间用名字兜底保证顺序稳定
  */
 export function listSessionDirs(root: string): SessionDirEntry[] {
@@ -179,7 +179,7 @@ export const isInteractive = (): boolean => Boolean(process.stdin.isTTY && proce
 /**
  * CLI 入口的公共外壳：
  * `--help` / `-h` → 帮助到 stdout 退出 0；无参数 → 交给 interactive(仅在 TTY 下)，
- * 没有 interactive 或非 TTY 则帮助到 stderr 退出 1 —— 非交互环境的契约不变；
+ * 没有 interactive 或非 TTY 则帮助到 stderr 退出 1，非交互环境的契约不变；
  * 其余交给 run(已过滤掉 help flag)，抛错则打印原因并以 1 退出
  */
 export async function runCli(help: string, run: (args: string[]) => void | Promise<void>, options: { interactive?: () => Promise<void> } = {}): Promise<void> {

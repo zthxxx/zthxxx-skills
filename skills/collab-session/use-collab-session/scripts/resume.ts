@@ -16,7 +16,7 @@
  * - 移动时去掉时间戳前缀；目标 `sessions/<name>/` 已存在 → 报错退出；
  *   一次恢复多个时先整体校验再移动，任一不合法都不动任何条目
  * - `--issue <file>…` 恢复仓库级 issue；`<file>` 接受裸文件名或 `archive/issues/<file>` 路径写法，原名移回 `issues/`
- * - 只做 mv，不碰 git —— 纯移动应先单独 commit，之后才开始修改内容
+ * - 只做 mv，不碰 git：纯移动应先单独 commit，之后才开始修改内容
  *
  * 用法(--help / 无参数时显示)：
  *   bun .agents/skills/use-collab-session/scripts/resume.ts

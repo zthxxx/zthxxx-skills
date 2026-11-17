@@ -1,11 +1,11 @@
 /**
- * archive.ts / resume.ts / new.ts / takeover.ts / prompt.ts(纯核心) 的单元测试 —— 与生产环境隔离：
+ * archive.ts / resume.ts / new.ts / takeover.ts / prompt.ts(纯核心) 的单元测试，与生产环境隔离：
  * 每个用例在 os.tmpdir() 下 mkdtemp 构造同构的 sessions/、archive/sessions/、issues/、archive/issues/，
  * 经 options 注入替换生产默认路径、时间戳传固定值，绝不触碰仓库真实目录
  *
  * 用法: bun test tests/collab-session/use-collab-session/
  *
- * 测试风格：以 property-based 为主 —— 固定种子的 PRNG 生成随机 session 名与时间戳，
+ * 测试风格：以 property-based 为主，固定种子的 PRNG 生成随机 session 名与时间戳，
  * 断言不变量(归档命名规则 / archive→resume 往返恒等 / 内容保持)，辅以边界错误用例
  */
 
@@ -122,7 +122,7 @@ function uniqueNames(rand: Rand, count: number): string[] {
   return [...names]
 }
 
-/** 把整棵目录树(含目录自身)的 mtime 定到指定时刻 —— latestMtimeMs 取的是树内最大值 */
+/** 把整棵目录树(含目录自身)的 mtime 定到指定时刻：latestMtimeMs 取的是树内最大值 */
 function touchTree(dir: string, epochMs: number): void {
   const time = new Date(epochMs)
   const walk = (current: string): void => {

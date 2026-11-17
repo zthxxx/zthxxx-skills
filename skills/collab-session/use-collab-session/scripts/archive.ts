@@ -17,13 +17,13 @@
  *   每个 session 各自按 git 推导时间戳，且先整体校验再移动，不做半截批量
  * - `--issue <file>…` 归档仓库级 issue；`<file>` 接受裸文件名或 `issues/<file>` 路径写法；
  *   与 <session-name>、`--all` 互斥(带 `--issue` 时其余位置参数都按 issue 文件处理)
- * - 时间戳默认从 git 推导，格式 YYMMDDHHmm(本地时间，年取后两位) ——
+ * - 时间戳默认从 git 推导，格式 YYMMDDHHmm(本地时间，年取后两位)；
  *   归档名要反映「这件事实际完成的时刻」，而非归档动作执行的时刻(归档往往滞后于完成)：
  *   - 目录工作区干净 → 最后一次触及该目录的 commit 时间
  *   - 目录有未提交改动 → 所有被 git 追踪文件的最新 mtime(改动未进 commit，commit 时间会偏早)
  *   - 既无 commit 也无追踪文件 → 报错(先 commit 再归档，见 ../SKILL.md#完成后提交与推送)
  * - 源不存在、目标已存在、session 名本身已带时间戳前缀 → 报错退出，不做半截操作
- * - mv 之后把移动过的条目(源与目标)精确 `git add` 进 stage —— 只传这些路径的 pathspec，
+ * - mv 之后把移动过的条目(源与目标)精确 `git add` 进 stage，只传这些路径的 pathspec，
  *   不动仓库里其他改动；源已不存在但仍有 index 记录，git 会记成删除并与目标配对成 rename。
  *   不做 commit：末尾打印一段建议的 `git commit` 命令(subject 固定、body 逐行列名字)，由调用方执行
  *
@@ -155,7 +155,7 @@ export function archiveIssues(files: readonly string[], options: Partial<IssuePa
 /**
  * 把一批已完成的移动精确 git add 进 stage：pathspec 只列每条移动的源与目标，
  * 源已不在工作区但 index 里还有记录，git 记成删除并与目标配对成 rename。
- * 一次 git 调用 —— 任一 pathspec 不匹配(如源从未被 git 追踪)则 git 整批拒绝、stage 原样不动
+ * 一次 git 调用：任一 pathspec 不匹配(如源从未被 git 追踪)则 git 整批拒绝、stage 原样不动
  */
 export function stageMoves(moves: ReadonlyArray<{ from: string, to: string }>): void {
   if (moves.length === 0)

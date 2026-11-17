@@ -1,5 +1,5 @@
 /**
- * session 多选交互 —— archive.ts / resume.ts 无参数运行时的选择器
+ * session 多选交互：archive.ts / resume.ts 无参数运行时的选择器
  *
  * 需求：
  * - 归档 / 恢复常常一次要处理好几个 session，逐个敲名字既慢又容易拼错；
@@ -11,7 +11,7 @@
  * - 一个都不勾也能确认，返回空数组，由调用方决定怎么提示；取消返回 null
  * - 列表最多显示 max(5, 终端行数 - 6) 项，候选多于一屏时滚动，光标始终在可见范围内；终端尺寸变化时按新行数重排
  * - 每行按终端列宽截断(CJK 宽字符按 Bun.stringWidth 计宽)，保证一行不折行，重绘时上移的行数才准确
- * - 画面渲染指向 stderr，执行结果由调用方打到 stdout —— 重定向 stdout 拿到的仍是纯结果
+ * - 画面渲染指向 stderr，执行结果由调用方打到 stdout，重定向 stdout 拿到的仍是纯结果
  * - 确认、取消、异常任何一种结束方式，都恢复终端的 raw mode、光标显示，并暂停 stdin
  *
  * 分层：按键解码 decodeKeys、状态迁移 stepPicker、渲染 renderPicker 都是纯函数，由 zthxxx-skills 仓库的 tests/collab-session/use-collab-session/session.test.ts 做 property-based 覆盖；

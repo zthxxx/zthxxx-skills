@@ -17,7 +17,7 @@ npx skills add zthxxx/zthxxx-skills --skill use-collab-session --skill setup-col
 3. 写入常驻指引、链好 `.claude/skills`、补 `.gitignore`，按确认的清单改规则、移动文件并 commit
 4. 验证脚本能运行、没有断掉的引用
 
-首次接入运行一次。之后第三方 skills 的 setup (如 `setup-matt-pocock-skills`) 重跑、把适配文件改回去时，再运行一次
+首次接入运行一次。之后 use-collab-session 更新，或第三方 skills 的 setup (如 `setup-matt-pocock-skills`) 重跑、把适配文件改回去时，再运行一次
 
 目前内置的第三方适配：Matt Pocock 系列 skills，见 [references/matt-pocock-skills.md](./references/matt-pocock-skills.md)
 

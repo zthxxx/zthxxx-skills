@@ -1,6 +1,6 @@
 ---
 name: setup-collab-session
-description: "让当前仓库接入 use-collab-session：检查环境，写入常驻指引，处理与现有规范、第三方 skills 的冲突，迁移文件。首次接入，或第三方 skills 的 setup 重跑之后运行"
+description: "让当前仓库接入 use-collab-session：检查环境，写入常驻指引，处理与现有规范、第三方 skills 的冲突，迁移文件。首次接入、`use-collab-session` 更新后，或第三方 skills 的 setup 重跑之后运行"
 disable-model-invocation: true
 ---
 
@@ -28,7 +28,7 @@ disable-model-invocation: true
 - 冲突处按 `use-collab-session` 执行：建议删掉项目规则里的冲突项；第三方 skills 的约定由 `use-collab-session` 覆盖，并在适配文件里写明覆盖了它的哪条约定
 - 项目的 Agent 指令文件只留指向 `use-collab-session` 的指引，不复述它的内容
 - 不留未定义的约定：项目在用、`use-collab-session` 又没有定义的约定，包括删掉冲突项或第三方适配文件后失去定义的，不提来源，独立写进 `AGENTS.md`
-- 按 `use-collab-session` 需要移动的目录与文件，逐个列出原路径与新路径
+- 按 `use-collab-session` 需要移动的目录与文件，逐个列出原路径与新路径；被 git 忽略的目录 (如日志、截图输出) 也算在内
 
 完成标准：清单的每一项用户都确认过 (同意、修改或放弃)
 
@@ -41,7 +41,7 @@ disable-model-invocation: true
   ```
 
 - skill 链接：两个 Agent 要读到同一份 skill。`.claude/skills` 不存在时，建指向 `../.agents/skills` 的目录软链；已是装着其他 skill 的真实目录时不替换，只确认 `use-collab-session`、`setup-collab-session` 各自的软链存在
-- `.gitignore`：加入 `.logs/` 与 `.playwright-cli/`，不带前导 `/`，session 目录里的同样忽略
+- `.gitignore`：加入 `.logs/`，不带前导 `/`，session 目录里的同样忽略
 - 按清单改规则文件、写第三方适配、移动文件。移动单独成一个 commit，下一个 commit 再更新现行文件里指向它们的引用；`archive/` 下的内容不改
 
 完成标准：清单每一项都已执行并 commit
@@ -51,4 +51,4 @@ disable-model-invocation: true
 - 在仓库根运行 `bun .agents/skills/use-collab-session/scripts/new.ts --help` 正常输出
 - `.claude/skills/use-collab-session/SKILL.md` 与指引里导入的路径都能读到
 - 在 Agent 指令文件、docs 与代码注释里搜一遍被删除、被移动的路径，没有断掉的引用
-- 告诉用户改了什么。第三方 skills 的 setup (如 `setup-matt-pocock-skills`) 之后再跑、把适配文件改回去时，再运行一次 `setup-collab-session`
+- 告诉用户改了什么。`use-collab-session` 更新后，或第三方 skills 的 setup (如 `setup-matt-pocock-skills`) 之后再跑、把适配文件改回去时，再运行一次 `setup-collab-session`

@@ -45,4 +45,4 @@ codex-session-id: {{CodexSessionId}}
 
 
 ## 关联 Refs
-> 本 session 的 docs/、scripts/、playground/、assets/、artifacts/、minutes/ (相对路径引用)；相关 MR、外部文档
+> 本 session 的 docs/、scripts/、playground/、assets/、artifacts/ (相对路径引用)；相关 MR、外部文档

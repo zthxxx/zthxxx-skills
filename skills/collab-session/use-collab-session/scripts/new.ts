@@ -12,7 +12,7 @@
  * - 输入 session title(即目录名，命名约定见 ../SKILL.md#命名与创建)；
  *   也接受 `sessions/<title>/` 这类 tab 补全出来的路径写法(自动归一)
  * - 按 ../SKILL.md 定义的内部结构建立空目录：
- *   artifacts/ minutes/ docs/ assets/ scripts/
+ *   artifacts/ docs/ assets/ scripts/(各目录下的分类子目录如 artifacts/minutes/ 按需创建)
  * - CONTEXT.md 直接从本目录的 template/CONTEXT.md 复制，
  *   复制时做简易变量替换：模板中的 `{{变量名}}` 占位符(允许花括号内空格)替换为实际值；
  *   模板出现未知变量则报错，保证模板与脚本同步演进。现有变量：
@@ -39,7 +39,6 @@ import { defaultPaths, normalizeName, runCli } from './lib'
 /** session 内部目录骨架(定义见 ../SKILL.md);`.logs/` 等不进 git 的过程目录按需创建，不在骨架内 */
 export const sessionSubDirs = [
   'artifacts',
-  'minutes',
   'docs',
   'assets',
   'scripts',
@@ -121,7 +120,7 @@ const HELP = `新建 session: 建立 sessions/<title>/ 的标准目录骨架 + �
   bun .agents/skills/use-collab-session/scripts/new.ts <title>    title 即 session 目录名(命名约定见 use-collab-session 的 SKILL.md「命名与创建」)
 
 行为：
-  - 建立空目录: artifacts/ minutes/ docs/ assets/ scripts/
+  - 建立空目录: artifacts/ docs/ assets/ scripts/
   - CONTEXT.md 从 use-collab-session 的 scripts/template/CONTEXT.md 复制，并替换模板中的 {{}} 变量:
       SessionTitle        = <title>
       ClaudeCodeSessionId = $CLAUDE_CODE_SESSION_ID(Claude Code 会话的 shell 里才有)

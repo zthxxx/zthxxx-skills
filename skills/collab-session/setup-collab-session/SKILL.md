@@ -14,7 +14,8 @@ disable-model-invocation: true
 
 - 先通读 `.agents/skills/use-collab-session/SKILL.md`，它就是这次接入要达到的规范
   - 读不到说明 `use-collab-session` 没有装在仓库级：请用户在仓库根运行 `npx skills add zthxxx/zthxxx-skills --skill use-collab-session --skill setup-collab-session --agent claude-code --agent codex`，装好再继续
-- 环境：当前目录在 git 仓库里 (脚本以 git 顶层为仓库根)，`bun --version` 可用 (脚本只依赖 Bun)。缺哪个就告诉用户，装好再继续
+- 环境：当前目录在 git 仓库里 (脚本以 git 顶层为仓库根)，不在就告诉用户
+- Bun：`use-collab-session` 建、接手、归档、恢复 session 的脚本都靠 Bun 运行，除 Bun 外没有其他依赖。`bun --version` 不可用时，向用户说明这个依赖，按用户机器上已有的工具选合适的安装途径 (如 Homebrew、mise，或 Bun 官方安装脚本)，用户同意后帮用户装好，`bun --version` 可用再继续
 - 读项目的 Agent 指令文件 (`AGENTS.md`、`CLAUDE.md` 及它们导入的文件)、其中引用的 docs 规则，以及现有的目录结构
 - 查第三方 skills：Agent 可用的 skills 列表、`skills-lock.json`、`.agents/skills/`。下列系列装着，或仓库里留有它的产物时，读对应的 reference：
   - Matt Pocock 系列 (`setup-matt-pocock-skills` 等)：[references/matt-pocock-skills.md](references/matt-pocock-skills.md)

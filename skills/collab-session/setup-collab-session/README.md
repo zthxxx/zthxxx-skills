@@ -12,7 +12,7 @@ npx skills add zthxxx/zthxxx-skills --skill use-collab-session --skill setup-col
 
 在仓库里运行 `/setup-collab-session`，Agent 会：
 
-1. 检查 git 与 Bun，读项目现有的 Agent 指令文件、规则文档、目录结构和已装的第三方 skills
+1. 检查 git 与 Bun (配套脚本只依赖 Bun；没装时说明依赖，经你同意后帮你装)，读项目现有的 Agent 指令文件、规则文档、目录结构和已装的第三方 skills
 2. 列出和 use-collab-session 冲突的规则、需要移动的文件，交给你确认
 3. 写入常驻指引、链好 `.claude/skills`、补 `.gitignore`，按确认的清单改规则、移动文件并 commit
 4. 验证脚本能运行、没有断掉的引用
